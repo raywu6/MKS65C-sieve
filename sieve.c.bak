@@ -1,0 +1,36 @@
+#include <stdlib.h>
+#include <stdio.h>
+#include <math.h>
+#include "sieve.h"
+
+int sieve(int n) {
+    int ARRAY_SIZE = 1.15 * n * log(n);
+	char sifter[ARRAY_SIZE];
+
+	int index;
+	int factor;
+
+	for(index = 0; index<sizeof(sifter); index++)
+		sifter[index] = 0;
+
+	for (factor=2; factor < 99; factor++) {
+		for(index = 2; index <sizeof(sifter) ; index++) {
+			if (index != factor && index%factor == 0)
+				sifter[index] = 1;
+		}
+	}
+
+	int reigningChampion=0;
+	int count=0;
+
+	for (index = 2; index <sizeof(sifter) ; index++) {
+		if (!sifter[index]) {
+			reigningChampion = index;
+			count++;
+		}
+		if (count==n)
+			return reigningChampion;
+	}
+
+	return -1;
+}
